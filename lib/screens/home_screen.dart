@@ -20,11 +20,11 @@ class HomeScreen extends StatelessWidget {
         if (constraints.maxWidth >= BreakPointWidth.midToLarge) {
           notifier.screenSize = ScreenSize.LARGE;
 
-          return const Row(
+          return Row(
             children: [
-              Expanded(flex: 3, child: SideMenuPage()),
+              const Expanded(flex: 3, child: SideMenuPage()),
               Expanded(flex: 4, child: TaskListPage()),
-              Expanded(flex: 6, child: DetailPage()),
+              const Expanded(flex: 6, child: DetailPage()),
             ],
           );
         }
@@ -34,10 +34,10 @@ class HomeScreen extends StatelessWidget {
         else if (constraints.maxWidth >= BreakPointWidth.smallToMid) {
           notifier.screenSize = ScreenSize.MID;
 
-          return const Row(
+          return Row(
             children: [
               Expanded(child: TaskListPage()),
-              Expanded(flex: 2, child: DetailPage()),
+              const Expanded(flex: 2, child: DetailPage()),
             ],
           );
         }
@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
         else {
           notifier.screenSize = ScreenSize.SMALL;
 
-          return const TaskListPage();
+          return TaskListPage();
         }
       },
     );
