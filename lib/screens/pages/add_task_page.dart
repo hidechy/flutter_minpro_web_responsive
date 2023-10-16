@@ -9,6 +9,8 @@ import '../components/task_content_part.dart';
 class AddTaskPage extends StatelessWidget {
   AddTaskPage({super.key});
 
+  final taskContentKey = GlobalKey<TaskContentPartState>();
+
   late BuildContext _context;
 
   ///
@@ -31,10 +33,18 @@ class AddTaskPage extends StatelessWidget {
           ),
         ],
       ),
-      body: const TaskContentPart(),
+      body: TaskContentPart(key: taskContentKey),
     );
   }
 
   ///
-  void _onDoneAddNewTask() {}
+  void _onDoneAddNewTask() {
+    final taskContentState = taskContentKey.currentState;
+    if (taskContentState == null) return;
+
+    if (taskContentState.formKey.currentState!.validate()) {
+      print(taskContentState.titleController.text);
+      print(taskContentState.detailController.text);
+    }
+  }
 }
