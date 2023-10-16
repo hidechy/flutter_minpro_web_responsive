@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
 
           return Row(
             children: [
-              const Expanded(flex: 3, child: SideMenuPage()),
+              Expanded(flex: 3, child: SideMenuPage()),
               Expanded(flex: 4, child: TaskListPage()),
               const Expanded(flex: 6, child: DetailPage()),
             ],

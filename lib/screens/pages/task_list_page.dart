@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../state/notifier.dart';
 import '../../util/constants.dart';
 import '../../util/styles.dart';
+import 'side_menu_page.dart';
 
 class TaskListPage extends StatelessWidget {
   TaskListPage({super.key});
@@ -46,6 +47,11 @@ class TaskListPage extends StatelessWidget {
                   onPressed: _addNewTask,
                   child: const Icon(Icons.add),
                 ),
+          drawer: (screenSize != ScreenSize.LARGE)
+              ? Drawer(
+                  child: SideMenuPage(),
+                )
+              : null,
         );
       },
     );
