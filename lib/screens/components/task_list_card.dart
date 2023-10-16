@@ -1,3 +1,5 @@
+// ignore_for_file: strict_raw_type
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +9,11 @@ import '../../util/functions.dart';
 import '../../util/styles.dart';
 
 class TaskListCard extends StatelessWidget {
-  const TaskListCard({super.key, required this.task});
+  const TaskListCard({super.key, required this.task, required this.onFinishChanged});
 
   final Task task;
+
+  final ValueChanged onFinishChanged;
 
   ///
   @override
@@ -17,6 +21,11 @@ class TaskListCard extends StatelessWidget {
     return Card(
       color: (DateTime.now().compareTo(task.limitDateTime) > 0) ? Colors.redAccent : CustomColors.detailBGColor,
       child: ListTile(
+        leading: Radio(
+          value: true,
+          groupValue: task.isFinished,
+          onChanged: onFinishChanged,
+        ),
         title: Row(
           children: [
             if (task.isImportant) ...[

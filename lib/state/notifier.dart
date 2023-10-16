@@ -43,4 +43,12 @@ class Notifier extends ChangeNotifier {
 
     getTaskList();
   }
+
+  ///
+  // ignore: inference_failure_on_untyped_parameter, type_annotate_public_apis
+  void finishTask({required Task selectedTask, required isFinished}) {
+    repository.finishTask(selectedTask: selectedTask, isFinished: isFinished);
+
+    getTaskList();
+  }
 }

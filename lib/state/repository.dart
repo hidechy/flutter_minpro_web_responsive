@@ -87,4 +87,24 @@ class Repository {
 
     return [...subListImportant, ...subListNotImportant];
   }
+
+  ///
+  // ignore: inference_failure_on_untyped_parameter, type_annotate_public_apis
+  void finishTask({required Task selectedTask, required isFinished}) {
+    final updateTask = selectedTask.copyWith(isFinished: isFinished);
+
+    updateTaskList(updateTask: updateTask);
+  }
+
+  ///
+  void updateTaskList({required Task updateTask}) {
+    final index = searchIndex(selectedTask: updateTask);
+
+    baseTaskList[index] = updateTask;
+  }
+
+  ///
+  int searchIndex({required Task selectedTask}) {
+    return baseTaskList.indexWhere((element) => element.id == selectedTask.id);
+  }
 }

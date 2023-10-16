@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/task.dart';
 import '../../state/notifier.dart';
 import '../../util/constants.dart';
 import '../../util/styles.dart';
@@ -52,7 +53,10 @@ class TaskListPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: selectedTaskList.length,
               shrinkWrap: true,
-              itemBuilder: (context, index) => TaskListCard(task: selectedTaskList[index]),
+              itemBuilder: (context, index) => TaskListCard(
+                task: selectedTaskList[index],
+                onFinishChanged: (value) => _finishTask(isFinished: value, selectedTask: selectedTaskList[index]),
+              ),
             ),
           ),
           floatingActionButton: (screenSize == ScreenSize.LARGE)
@@ -77,5 +81,15 @@ class TaskListPage extends StatelessWidget {
   ///
   void _addNewTask() {
     showAddNewTaskDialog(_context);
+  }
+
+  ///
+  // ignore: inference_failure_on_untyped_parameter
+  void _finishTask({required isFinished, required Task selectedTask}) {
+    if (isFinished == null) {
+      return;
+    }
+
+    _context.read<Notifier>().finishTask(selectedTask: selectedTask, isFinished: isFinished);
   }
 }
