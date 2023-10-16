@@ -19,3 +19,14 @@ class DialogSize {
   static const double addTaskDialogWidth = 500;
   static const double addTaskDialogHeight = 500;
 }
+
+class TextStyles {
+  static const newTaskTitleTextStyle = TextStyle(fontSize: 18);
+  static const newTaskItemTextStyle = TextStyle(fontSize: 16);
+  static const newTaskDetailTextStyle = TextStyle(fontSize: 14);
+}
+
+class CustomSpacer {
+  static const height8 = SizedBox(height: 8);
+  static const width24 = SizedBox(width: 24);
+}
