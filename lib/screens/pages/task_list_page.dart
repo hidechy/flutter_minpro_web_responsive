@@ -107,5 +107,14 @@ class TaskListPage extends StatelessWidget {
   ///
   void _deleteTask({required Task selectedTask}) {
     _context.read<Notifier>().deleteTask(selectedTask: selectedTask);
+
+    showSnackBar(
+      context: _context,
+      contentText: StringR.deleteTaskCompleted,
+      flag: 'TaskListPage',
+      onUndone: () {
+        _context.read<Notifier>().undo();
+      },
+    );
   }
 }
