@@ -58,6 +58,21 @@ class SideMenuPage extends StatelessWidget {
                 Text('いろんな情報'),
               ],
             ),
+            ListTile(
+              title: Text(StringR.showLicense),
+              onTap: () {
+                showAboutDialog(
+                  context: context,
+                  applicationIcon: const FlutterLogo(),
+                  applicationName: StringR.appTitle,
+                  applicationLegalese: '\u{a9} 2023 hidechy',
+                  children: const [
+                    Text('いろんな情報'),
+                    Text('いろんな情報'),
+                  ],
+                );
+              },
+            ),
           ],
         ),
       ),
