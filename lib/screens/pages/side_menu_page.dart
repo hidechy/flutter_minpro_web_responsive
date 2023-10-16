@@ -47,7 +47,17 @@ class SideMenuPage extends StatelessWidget {
               value: false,
               onChanged: null,
               title: Text(StringR.isFinishedTaskIncluded),
-            )
+            ),
+            AboutListTile(
+              icon: const Icon(Icons.info_outline),
+              applicationIcon: const FlutterLogo(),
+              applicationName: StringR.appTitle,
+              applicationLegalese: '\u{a9} 2023 hidechy',
+              aboutBoxChildren: const [
+                Text('いろんな情報'),
+                Text('いろんな情報'),
+              ],
+            ),
           ],
         ),
       ),
