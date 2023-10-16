@@ -30,26 +30,30 @@ class DetailPage extends StatelessWidget {
           appBar: AppBar(
             title: Text(StringR.taskDetail),
             centerTitle: true,
-            leading: IconButton(
-              onPressed: () {
-                _clearCurrentTask(selectedTask: selectedTask);
+            leading: (selectedTask != null)
+                ? IconButton(
+                    onPressed: () {
+                      _clearCurrentTask(selectedTask: selectedTask);
 
-                if (screenSize == ScreenSize.SMALL) {
-                  Navigator.pop(context);
-                }
-              },
-              icon: const Icon(Icons.close),
-            ),
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.done),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.delete),
-              ),
-            ],
+                      if (screenSize == ScreenSize.SMALL) {
+                        Navigator.pop(context);
+                      }
+                    },
+                    icon: const Icon(Icons.close),
+                  )
+                : null,
+            actions: (selectedTask != null)
+                ? [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.done),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.delete),
+                    ),
+                  ]
+                : null,
           ),
           body: SafeArea(
             child: Column(
