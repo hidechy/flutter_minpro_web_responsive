@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/task.dart';
 import '../util/styles.dart';
 
 import 'repository.dart';
@@ -11,6 +12,12 @@ class Notifier extends ChangeNotifier {
 
   ScreenSize screenSize = ScreenSize.SMALL;
 
+  List<Task> selectedTaskList = [];
+
+  bool isSorted = false;
+
+  bool isFinishedTaskIncluded = false;
+
   ///
   void addNewTask({
     required String title,
@@ -19,5 +26,12 @@ class Notifier extends ChangeNotifier {
     required String detail,
   }) {
     repository.addNewTask(title: title, limitDateTime: limitDateTime, isImportant: isImportant, detail: detail);
+  }
+
+  ///
+  void getTaskList() {
+    selectedTaskList = repository.getTaskList(isSorted: isSorted, isFinishedTaskIncluded: isFinishedTaskIncluded);
+
+    notifyListeners();
   }
 }

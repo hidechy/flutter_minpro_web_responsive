@@ -30,4 +30,18 @@ class Repository {
 
     return maxId + 1;
   }
+
+  ///
+  List<Task> getTaskList({required bool isSorted, required bool isFinishedTaskIncluded}) {
+    return getBaseTaskList(isFinishedTaskIncluded: isFinishedTaskIncluded);
+  }
+
+  ///
+  List<Task> getBaseTaskList({required bool isFinishedTaskIncluded}) {
+    baseTaskList.sort((a, b) {
+      return a.limitDateTime.compareTo(b.limitDateTime);
+    });
+
+    return baseTaskList;
+  }
 }

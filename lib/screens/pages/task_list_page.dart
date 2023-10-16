@@ -19,9 +19,14 @@ class TaskListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     _context = context;
 
+    // Futureを使用しないと「setState or markNeedBuild...」みたいなエラーが出る
+    Future(() => context.read<Notifier>().getTaskList());
+
     return Consumer<Notifier>(
       builder: (context, notifier, child) {
         final screenSize = notifier.screenSize;
+
+        final selectedTaskList = notifier.selectedTaskList;
 
         return Scaffold(
           backgroundColor: PageColor.taskListBGColor,
@@ -35,11 +40,13 @@ class TaskListPage extends StatelessWidget {
               ),
             ],
           ),
-          body: const SafeArea(
-            child: Column(
-              children: [
-                Text('TaskListPage'),
-              ],
+          body: SafeArea(
+            child: ListView.builder(
+              itemCount: selectedTaskList.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Text(selectedTaskList[index].title);
+              },
             ),
           ),
           floatingActionButton: (screenSize == ScreenSize.LARGE)
