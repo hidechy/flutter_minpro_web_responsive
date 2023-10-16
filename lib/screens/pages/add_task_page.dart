@@ -40,7 +40,9 @@ class AddTaskPage extends StatelessWidget {
   ///
   void _onDoneAddNewTask() {
     final taskContentState = taskContentKey.currentState;
-    if (taskContentState == null) return;
+    if (taskContentState == null) {
+      return;
+    }
 
     if (taskContentState.formKey.currentState!.validate()) {
       print(taskContentState.titleController.text);
