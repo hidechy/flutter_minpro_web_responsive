@@ -9,7 +9,7 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: PageColor.detailBGColor,
+      backgroundColor: CustomColors.detailBGColor,
       body: SafeArea(
         child: Column(
           children: [

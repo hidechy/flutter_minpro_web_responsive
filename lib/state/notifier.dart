@@ -26,6 +26,8 @@ class Notifier extends ChangeNotifier {
     required String detail,
   }) {
     repository.addNewTask(title: title, limitDateTime: limitDateTime, isImportant: isImportant, detail: detail);
+
+    notifyListeners();
   }
 
   ///

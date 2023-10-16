@@ -19,7 +19,7 @@ class SideMenuPage extends StatelessWidget {
     _context = context;
 
     return Scaffold(
-      backgroundColor: PageColor.sideMenuBGColor,
+      backgroundColor: CustomColors.sideMenuBGColor,
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.zero,

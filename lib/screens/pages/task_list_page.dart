@@ -7,6 +7,7 @@ import '../../state/notifier.dart';
 import '../../util/constants.dart';
 import '../../util/styles.dart';
 import '../components/show_add_new_task_dialog.dart';
+import '../components/task_list_card.dart';
 import 'side_menu_page.dart';
 
 class TaskListPage extends StatelessWidget {
@@ -29,7 +30,7 @@ class TaskListPage extends StatelessWidget {
         final selectedTaskList = notifier.selectedTaskList;
 
         return Scaffold(
-          backgroundColor: PageColor.taskListBGColor,
+          backgroundColor: CustomColors.taskListBGColor,
           appBar: AppBar(
             title: Text(StringR.taskList),
             centerTitle: true,
@@ -44,9 +45,7 @@ class TaskListPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: selectedTaskList.length,
               shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Text(selectedTaskList[index].title);
-              },
+              itemBuilder: (context, index) => TaskListCard(task: selectedTaskList[index]),
             ),
           ),
           floatingActionButton: (screenSize == ScreenSize.LARGE)

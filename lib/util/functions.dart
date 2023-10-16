@@ -31,7 +31,10 @@ void showSnackBar({required BuildContext context, required String contentText}) 
             children: [
               AutoSizeText(contentText),
               TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
                 child: AutoSizeText(StringR.close),
               ),
             ],

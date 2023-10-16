@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-class PageColor {
+class CustomColors {
   static const sideMenuBGColor = Color(0xFF1B1B1B);
   static const taskListBGColor = Color(0xFF212121);
   static const detailBGColor = Color(0xFF424242);
@@ -29,4 +29,5 @@ class TextStyles {
 class CustomSpacer {
   static const height8 = SizedBox(height: 8);
   static const width24 = SizedBox(width: 24);
+  static const width10 = SizedBox(width: 10);
 }
