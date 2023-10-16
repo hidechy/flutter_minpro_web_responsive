@@ -29,16 +29,23 @@ class TaskListPage extends StatelessWidget {
 
         final selectedTaskList = notifier.selectedTaskList;
 
+        final isSorted = notifier.isSorted;
+
         return Scaffold(
           backgroundColor: CustomColors.taskListBGColor,
           appBar: AppBar(
             title: Text(StringR.taskList),
             centerTitle: true,
             actions: [
-              IconButton(
-                onPressed: _sort,
-                icon: const Icon(Icons.sort),
-              ),
+              isSorted
+                  ? IconButton(
+                      onPressed: () => _sort(isSort: false),
+                      icon: const Icon(Icons.undo),
+                    )
+                  : IconButton(
+                      onPressed: () => _sort(isSort: true),
+                      icon: const Icon(Icons.sort),
+                    ),
             ],
           ),
           body: SafeArea(
@@ -65,7 +72,7 @@ class TaskListPage extends StatelessWidget {
   }
 
   ///
-  void _sort() {}
+  void _sort({required bool isSort}) => _context.read<Notifier>().sort(isSort: isSort);
 
   ///
   void _addNewTask() {

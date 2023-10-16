@@ -36,4 +36,11 @@ class Notifier extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  ///
+  void sort({required bool isSort}) {
+    isSorted = isSort;
+
+    getTaskList();
+  }
 }

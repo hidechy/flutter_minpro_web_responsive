@@ -33,7 +33,15 @@ class Repository {
 
   ///
   List<Task> getTaskList({required bool isSorted, required bool isFinishedTaskIncluded}) {
-    return getBaseTaskList(isFinishedTaskIncluded: isFinishedTaskIncluded);
+    var taskList = <Task>[];
+
+    taskList = getBaseTaskList(isFinishedTaskIncluded: isFinishedTaskIncluded);
+
+    if (isSorted) {
+      return sortByImportant(taskList: taskList);
+    }
+
+    return taskList;
   }
 
   ///
@@ -43,5 +51,14 @@ class Repository {
     });
 
     return baseTaskList;
+  }
+
+  ///
+  List<Task> sortByImportant({required List<Task> taskList}) {
+    taskList.sort((a, b) {
+      return (a.isImportant) ? -1 : 1;
+    });
+
+    return taskList;
   }
 }
