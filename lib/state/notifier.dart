@@ -58,4 +58,11 @@ class Notifier extends ChangeNotifier {
 
     getTaskList();
   }
+
+  ///
+  changeFinishStatus({required bool isIncluded}) {
+    isFinishedTaskIncluded = isIncluded;
+
+    getTaskList();
+  }
 }

@@ -44,11 +44,15 @@ class SideMenuPage extends StatelessWidget {
                 _addNewTask();
               },
             ),
-            SwitchListTile(
-              value: false,
-              onChanged: null,
-              title: Text(StringR.isFinishedTaskIncluded),
-            ),
+            Consumer<Notifier>(builder: (context, notifier, child) {
+              final isFinishedTaskIncluded = notifier.isFinishedTaskIncluded;
+
+              return SwitchListTile(
+                value: isFinishedTaskIncluded,
+                onChanged: (isIncluded) => notifier.changeFinishStatus(isIncluded: isIncluded),
+                title: Text(StringR.isFinishedTaskIncluded),
+              );
+            }),
             AboutListTile(
               icon: const Icon(Icons.info_outline),
               applicationIcon: const FlutterLogo(),
