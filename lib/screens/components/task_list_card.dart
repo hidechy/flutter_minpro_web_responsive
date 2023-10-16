@@ -9,11 +9,18 @@ import '../../util/functions.dart';
 import '../../util/styles.dart';
 
 class TaskListCard extends StatelessWidget {
-  const TaskListCard({super.key, required this.task, required this.onFinishChanged});
+  const TaskListCard({
+    super.key,
+    required this.task,
+    required this.onFinishChanged,
+    required this.onDelete,
+  });
 
   final Task task;
 
   final ValueChanged onFinishChanged;
+
+  final VoidCallback onDelete;
 
   ///
   @override
@@ -26,6 +33,7 @@ class TaskListCard extends StatelessWidget {
           groupValue: task.isFinished,
           onChanged: onFinishChanged,
         ),
+        onLongPress: onDelete,
         title: Row(
           children: [
             if (task.isImportant) ...[

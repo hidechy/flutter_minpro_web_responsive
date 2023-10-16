@@ -135,4 +135,13 @@ class Repository {
 
     return returnList;
   }
+
+  ///
+  void deleteTask({required Task selectedTask}) {
+    baseTaskListBeforeChange = copyBaseTaskList();
+
+    final index = searchIndex(selectedTask: selectedTask);
+
+    baseTaskList.removeAt(index);
+  }
 }

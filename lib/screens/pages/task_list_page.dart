@@ -57,6 +57,7 @@ class TaskListPage extends StatelessWidget {
               itemBuilder: (context, index) => TaskListCard(
                 task: selectedTaskList[index],
                 onFinishChanged: (value) => _finishTask(isFinished: value, selectedTask: selectedTaskList[index]),
+                onDelete: () => _deleteTask(selectedTask: selectedTaskList[index]),
               ),
             ),
           ),
@@ -101,5 +102,10 @@ class TaskListPage extends StatelessWidget {
         _context.read<Notifier>().undo();
       },
     );
+  }
+
+  ///
+  void _deleteTask({required Task selectedTask}) {
+    _context.read<Notifier>().deleteTask(selectedTask: selectedTask);
   }
 }

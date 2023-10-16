@@ -65,4 +65,11 @@ class Notifier extends ChangeNotifier {
 
     getTaskList();
   }
+
+  ///
+  void deleteTask({required Task selectedTask}) {
+    repository.deleteTask(selectedTask: selectedTask);
+
+    getTaskList();
+  }
 }
