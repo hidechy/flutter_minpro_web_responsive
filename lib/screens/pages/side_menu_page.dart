@@ -73,6 +73,18 @@ class SideMenuPage extends StatelessWidget {
                 );
               },
             ),
+            ListTile(
+              title: Text(StringR.showLicense),
+              onTap: () {
+                showLicensePage(
+                  context: context,
+                  applicationIcon: const FlutterLogo(),
+                  applicationName: StringR.appTitle,
+                  applicationLegalese: '\u{a9} 2023 hidechy',
+                  applicationVersion: '1.0',
+                );
+              },
+            ),
           ],
         ),
       ),
