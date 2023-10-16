@@ -55,7 +55,11 @@ class AddTaskPage extends StatelessWidget {
             detail: taskContentState.detailController.text,
           );
 
-      showSnackBar(context: _context, contentText: StringR.addTaskCompleted);
+      showSnackBar(
+        context: _context,
+        contentText: StringR.addTaskCompleted,
+        flag: 'AddTaskPage',
+      );
 
       if (_context.read<Notifier>().screenSize == ScreenSize.SMALL) {
         Navigator.pop(_context);

@@ -51,4 +51,11 @@ class Notifier extends ChangeNotifier {
 
     getTaskList();
   }
+
+  ///
+  void undo() {
+    repository.undo();
+
+    getTaskList();
+  }
 }

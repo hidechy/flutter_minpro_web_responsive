@@ -1,6 +1,8 @@
 import '../data/task.dart';
 
 class Repository {
+  List<Task> baseTaskListBeforeChange = [];
+
   ///
   void addNewTask({
     required String title,
@@ -50,7 +52,13 @@ class Repository {
       return a.limitDateTime.compareTo(b.limitDateTime);
     });
 
-    return baseTaskList;
+//    return baseTaskList;
+
+    if (isFinishedTaskIncluded) {
+      return baseTaskList;
+    } else {
+      return baseTaskList.where((element) => element.isFinished == false).toList();
+    }
   }
 
   ///
@@ -91,6 +99,12 @@ class Repository {
   ///
   // ignore: inference_failure_on_untyped_parameter, type_annotate_public_apis
   void finishTask({required Task selectedTask, required isFinished}) {
+    //
+//    baseTaskListBeforeChange = baseTaskList;    //参照渡しのため、=では値は入らない
+    baseTaskListBeforeChange = copyBaseTaskList();
+
+    //
+
     final updateTask = selectedTask.copyWith(isFinished: isFinished);
 
     updateTaskList(updateTask: updateTask);
@@ -106,5 +120,21 @@ class Repository {
   ///
   int searchIndex({required Task selectedTask}) {
     return baseTaskList.indexWhere((element) => element.id == selectedTask.id);
+  }
+
+  ///
+  void undo() {
+    baseTaskList = baseTaskListBeforeChange;
+  }
+
+  ///
+  List<Task> copyBaseTaskList() {
+    var returnList = <Task>[];
+
+    baseTaskList.forEach((element) {
+      returnList.add(element);
+    });
+
+    return returnList;
   }
 }

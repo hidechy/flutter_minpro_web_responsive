@@ -13,11 +13,21 @@ String convertDateTimeToString({required DateTime dateTime}) {
 }
 
 ///
-void showSnackBar({required BuildContext context, required String contentText}) {
+void showSnackBar({
+  required BuildContext context,
+  required String contentText,
+  required String flag,
+  VoidCallback? onUndone,
+}) {
   final notifier = context.read<Notifier>();
 
   if (notifier.screenSize == ScreenSize.SMALL) {
-    final snackBar = SnackBar(content: Text(contentText));
+    final snackBar = SnackBar(
+      content: Text(contentText),
+      action: (flag == 'TaskListPage' || onUndone != null)
+          ? SnackBarAction(label: StringR.undo, onPressed: onUndone!)
+          : null,
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   } else {
     showModalBottomSheet(
@@ -30,12 +40,28 @@ void showSnackBar({required BuildContext context, required String contentText}) 
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AutoSizeText(contentText),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-                child: AutoSizeText(StringR.close),
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+
+                      if (flag == 'AddTaskPage') {
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: AutoSizeText(StringR.close),
+                  ),
+                  if (flag == 'TaskListPage' || onUndone != null)
+                    TextButton(
+                      onPressed: () {
+                        onUndone!();
+
+                        Navigator.pop(context);
+                      },
+                      child: AutoSizeText(StringR.undo),
+                    ),
+                ],
               ),
             ],
           ),

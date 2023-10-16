@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../data/task.dart';
 import '../../state/notifier.dart';
 import '../../util/constants.dart';
+import '../../util/functions.dart';
 import '../../util/styles.dart';
 import '../components/show_add_new_task_dialog.dart';
 import '../components/task_list_card.dart';
@@ -91,5 +92,14 @@ class TaskListPage extends StatelessWidget {
     }
 
     _context.read<Notifier>().finishTask(selectedTask: selectedTask, isFinished: isFinished);
+
+    showSnackBar(
+      context: _context,
+      contentText: StringR.finishTaskCompleted,
+      flag: 'TaskListPage',
+      onUndone: () {
+        _context.read<Notifier>().undo();
+      },
+    );
   }
 }
