@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../state/notifier.dart';
 import '../../util/constants.dart';
 import '../../util/styles.dart';
+import '../components/show_add_new_task_dialog.dart';
 import 'side_menu_page.dart';
 
 class TaskListPage extends StatelessWidget {
@@ -61,5 +62,7 @@ class TaskListPage extends StatelessWidget {
   void _sort() {}
 
   ///
-  void _addNewTask() {}
+  void _addNewTask() {
+    showAddNewTaskDialog(_context);
+  }
 }

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../state/notifier.dart';
 import '../../util/constants.dart';
 import '../../util/styles.dart';
+import '../components/show_add_new_task_dialog.dart';
 
 class SideMenuPage extends StatelessWidget {
   SideMenuPage({super.key});
@@ -92,5 +93,7 @@ class SideMenuPage extends StatelessWidget {
   }
 
   ///
-  void _addNewTask() {}
+  void _addNewTask() {
+    showAddNewTaskDialog(_context);
+  }
 }

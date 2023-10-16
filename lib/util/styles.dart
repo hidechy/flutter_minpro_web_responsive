@@ -14,3 +14,8 @@ class BreakPointWidth {
 }
 
 enum ScreenSize { SMALL, MID, LARGE }
+
+class DialogSize {
+  static const double addTaskDialogWidth = 500;
+  static const double addTaskDialogHeight = 500;
+}
