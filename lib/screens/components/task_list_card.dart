@@ -33,7 +33,12 @@ class TaskListCard extends StatelessWidget {
               ),
               CustomSpacer.width10,
             ],
-            Text(task.title),
+            Expanded(
+              child: Text(
+                task.title,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         ),
         subtitle: AutoSizeText(convertDateTimeToString(dateTime: task.limitDateTime)),
