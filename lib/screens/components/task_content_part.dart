@@ -23,8 +23,6 @@ class TaskContentPartState extends State<TaskContentPart> {
 
   DateTime limitDateTime = DateTime.now();
 
-  late BuildContext _context;
-
   final formKey = GlobalKey<FormState>();
 
   ///
@@ -39,8 +37,6 @@ class TaskContentPartState extends State<TaskContentPart> {
   ///
   @override
   Widget build(BuildContext context) {
-    _context = context;
-
     return Form(
       key: formKey,
       child: SingleChildScrollView(

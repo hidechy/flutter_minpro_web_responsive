@@ -1,9 +1,12 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../state/notifier.dart';
 import '../../util/constants.dart';
-
+import '../../util/functions.dart';
+import '../../util/styles.dart';
 import '../components/task_content_part.dart';
 
 class AddTaskPage extends StatelessWidget {
@@ -45,8 +48,18 @@ class AddTaskPage extends StatelessWidget {
     }
 
     if (taskContentState.formKey.currentState!.validate()) {
-      print(taskContentState.titleController.text);
-      print(taskContentState.detailController.text);
+      _context.read<Notifier>().addNewTask(
+            title: taskContentState.titleController.text,
+            limitDateTime: taskContentState.limitDateTime,
+            isImportant: taskContentState.isImportant,
+            detail: taskContentState.detailController.text,
+          );
+
+      showSnackBar(context: _context, contentText: StringR.addTaskCompleted);
+
+      if (_context.read<Notifier>().screenSize == ScreenSize.SMALL) {
+        Navigator.pop(_context);
+      }
     }
   }
 }

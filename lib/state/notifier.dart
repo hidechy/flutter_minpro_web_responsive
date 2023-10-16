@@ -10,4 +10,14 @@ class Notifier extends ChangeNotifier {
   final Repository repository;
 
   ScreenSize screenSize = ScreenSize.SMALL;
+
+  ///
+  void addNewTask({
+    required String title,
+    required DateTime limitDateTime,
+    required bool isImportant,
+    required String detail,
+  }) {
+    repository.addNewTask(title: title, limitDateTime: limitDateTime, isImportant: isImportant, detail: detail);
+  }
 }
