@@ -56,7 +56,20 @@ class Repository {
   ///
   List<Task> sortByImportant({required List<Task> taskList}) {
     taskList.sort((a, b) {
-      return (a.isImportant) ? -1 : 1;
+//      return (a.isImportant) ? -1 : 1;
+
+      final isImportantA = a.isImportant;
+      final isImportantB = b.isImportant;
+
+      final limitDateTimeCompare = a.limitDateTime.compareTo(b.limitDateTime);
+
+      if (isImportantA == true && (isImportantB == false || limitDateTimeCompare < 0)) {
+        return -1;
+      } else if (isImportantB == false && limitDateTimeCompare < 0) {
+        return -1;
+      } else {
+        return 1;
+      }
     });
 
     return taskList;
