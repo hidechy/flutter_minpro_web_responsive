@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               Expanded(flex: 3, child: SideMenuPage()),
               Expanded(flex: 4, child: TaskListPage()),
-              const Expanded(flex: 6, child: DetailPage()),
+              Expanded(flex: 6, child: DetailPage()),
             ],
           );
         }
@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
           return Row(
             children: [
               Expanded(child: TaskListPage()),
-              const Expanded(flex: 2, child: DetailPage()),
+              Expanded(flex: 2, child: DetailPage()),
             ],
           );
         }

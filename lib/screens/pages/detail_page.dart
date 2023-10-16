@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_minpro_web_responsive/state/notifier.dart';
@@ -8,11 +10,15 @@ import '../../util/constants.dart';
 import '../../util/styles.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({super.key});
+  DetailPage({super.key});
+
+  late BuildContext _context;
 
   ///
   @override
   Widget build(BuildContext context) {
+    _context = context;
+
     return Selector<Notifier, Tuple2<Task?, ScreenSize>>(
       selector: (context, notifier) => Tuple2(notifier.currentTask, notifier.screenSize),
       builder: (context, data, child) {
@@ -25,7 +31,13 @@ class DetailPage extends StatelessWidget {
             title: Text(StringR.taskDetail),
             centerTitle: true,
             leading: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                _clearCurrentTask(selectedTask: selectedTask);
+
+                if (screenSize == ScreenSize.SMALL) {
+                  Navigator.pop(context);
+                }
+              },
               icon: const Icon(Icons.close),
             ),
             actions: [
@@ -49,5 +61,10 @@ class DetailPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  ///
+  void _clearCurrentTask({Task? selectedTask}) {
+    _context.read<Notifier>().setCurrentTask(null);
   }
 }

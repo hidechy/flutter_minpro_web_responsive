@@ -122,7 +122,7 @@ class TaskListPage extends StatelessWidget {
 
   ///
   void _showDetailTask({required Task selectedTask}) {
-    _context.read<Notifier>().setCurrentTask(selectedTask: selectedTask);
+    _context.read<Notifier>().setCurrentTask(selectedTask);
 
     if (_context.read<Notifier>().screenSize == ScreenSize.SMALL) {
       Navigator.push(_context, MaterialPageRoute(builder: (context) => const DetailScreen()));
