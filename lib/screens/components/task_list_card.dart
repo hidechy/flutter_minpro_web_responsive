@@ -14,6 +14,7 @@ class TaskListCard extends StatelessWidget {
     required this.task,
     required this.onFinishChanged,
     required this.onDelete,
+    required this.onEdit,
   });
 
   final Task task;
@@ -21,6 +22,8 @@ class TaskListCard extends StatelessWidget {
   final ValueChanged onFinishChanged;
 
   final VoidCallback onDelete;
+
+  final VoidCallback onEdit;
 
   ///
   @override
@@ -34,6 +37,7 @@ class TaskListCard extends StatelessWidget {
           onChanged: onFinishChanged,
         ),
         onLongPress: onDelete,
+        onTap: onEdit,
         title: Row(
           children: [
             if (task.isImportant) ...[

@@ -18,6 +18,8 @@ class Notifier extends ChangeNotifier {
 
   bool isFinishedTaskIncluded = false;
 
+  Task? currentTask;
+
   ///
   void addNewTask({
     required String title,
@@ -71,5 +73,12 @@ class Notifier extends ChangeNotifier {
     repository.deleteTask(selectedTask: selectedTask);
 
     getTaskList();
+  }
+
+  ///
+  void setCurrentTask({required Task selectedTask}) {
+    currentTask = selectedTask;
+
+    notifyListeners();
   }
 }

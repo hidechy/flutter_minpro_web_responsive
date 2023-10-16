@@ -10,6 +10,7 @@ import '../../util/functions.dart';
 import '../../util/styles.dart';
 import '../components/show_add_new_task_dialog.dart';
 import '../components/task_list_card.dart';
+import '../detail_screen.dart';
 import 'side_menu_page.dart';
 
 class TaskListPage extends StatelessWidget {
@@ -58,6 +59,7 @@ class TaskListPage extends StatelessWidget {
                 task: selectedTaskList[index],
                 onFinishChanged: (value) => _finishTask(isFinished: value, selectedTask: selectedTaskList[index]),
                 onDelete: () => _deleteTask(selectedTask: selectedTaskList[index]),
+                onEdit: () => _showDetailTask(selectedTask: selectedTaskList[index]),
               ),
             ),
           ),
@@ -116,5 +118,14 @@ class TaskListPage extends StatelessWidget {
         _context.read<Notifier>().undo();
       },
     );
+  }
+
+  ///
+  void _showDetailTask({required Task selectedTask}) {
+    _context.read<Notifier>().setCurrentTask(selectedTask: selectedTask);
+
+    if (_context.read<Notifier>().screenSize == ScreenSize.SMALL) {
+      Navigator.push(_context, MaterialPageRoute(builder: (context) => const DetailScreen()));
+    }
   }
 }
