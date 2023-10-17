@@ -81,4 +81,11 @@ class Notifier extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  ///
+  void updateTask({required Task task}) {
+    repository.updateTaskList(updateTask: task);
+
+    getTaskList();
+  }
 }

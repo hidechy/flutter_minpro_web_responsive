@@ -52,7 +52,7 @@ class DetailPage extends StatelessWidget {
             actions: (selectedTask != null)
                 ? [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () => _updateTask(selectedTask: selectedTask),
                       icon: const Icon(Icons.done),
                     ),
                     IconButton(
@@ -92,5 +92,25 @@ class DetailPage extends StatelessWidget {
     taskContentPartState
       ..taskForEdit = selectedTask
       ..setDetailData();
+  }
+
+  ///
+  void _updateTask({required Task selectedTask}) {
+    final taskContentPartState = taskContentPartKey.currentState;
+
+    if (taskContentPartState == null) {
+      return;
+    }
+
+    if (taskContentPartState.formKey.currentState!.validate()) {
+      final taskForUpdate = selectedTask.copyWith(
+        title: taskContentPartState.titleController.text,
+        detail: taskContentPartState.detailController.text,
+        limitDateTime: taskContentPartState.limitDateTime,
+        isImportant: taskContentPartState.isImportant,
+      );
+
+      _context.read<Notifier>().updateTask(task: taskForUpdate);
+    }
   }
 }
