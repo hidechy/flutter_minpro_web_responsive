@@ -2,15 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:test_minpro_web_responsive/state/notifier.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../data/task.dart';
+import '../../state/notifier.dart';
 import '../../util/constants.dart';
 import '../../util/styles.dart';
+import '../components/task_content_part.dart';
 
 class DetailPage extends StatelessWidget {
   DetailPage({super.key});
+
+  final taskContentPartKey = GlobalKey<TaskContentPartState>();
 
   late BuildContext _context;
 
@@ -24,6 +27,10 @@ class DetailPage extends StatelessWidget {
       builder: (context, data, child) {
         final selectedTask = data.item1;
         final screenSize = data.item2;
+
+        if (selectedTask != null && screenSize != ScreenSize.SMALL) {
+          _updateDetailInfo(selectedTask: selectedTask);
+        }
 
         return Scaffold(
           backgroundColor: CustomColors.detailBGColor,
@@ -55,13 +62,15 @@ class DetailPage extends StatelessWidget {
                   ]
                 : null,
           ),
-          body: SafeArea(
-            child: Column(
-              children: [
-                Text(selectedTask?.title ?? ''),
-              ],
-            ),
-          ),
+          body: (selectedTask != null)
+              ? SafeArea(
+                  child: TaskContentPart(
+                    key: taskContentPartKey,
+                    selectedTask: selectedTask,
+                    isEditMode: true,
+                  ),
+                )
+              : null,
         );
       },
     );
@@ -70,5 +79,18 @@ class DetailPage extends StatelessWidget {
   ///
   void _clearCurrentTask({Task? selectedTask}) {
     _context.read<Notifier>().setCurrentTask(null);
+  }
+
+  ///
+  void _updateDetailInfo({required Task selectedTask}) {
+    final taskContentPartState = taskContentPartKey.currentState;
+
+    if (taskContentPartState == null) {
+      return;
+    }
+
+    taskContentPartState
+      ..taskForEdit = selectedTask
+      ..setDetailData();
   }
 }

@@ -1,21 +1,24 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
+import '../../data/task.dart';
 import '../../util/constants.dart';
 import '../../util/functions.dart';
 import '../../util/styles.dart';
 
 class TaskContentPart extends StatefulWidget {
-  const TaskContentPart({super.key});
+  const TaskContentPart({super.key, this.selectedTask, required this.isEditMode});
 
+  final Task? selectedTask;
+  final bool isEditMode;
+
+  ///
   @override
-//  State<TaskContentPart> createState() => _TaskContentPartState();
   State<TaskContentPart> createState() => TaskContentPartState();
 }
 
-//class _TaskContentPartState extends State<TaskContentPart> {
 class TaskContentPartState extends State<TaskContentPart> {
-  //
-
   final titleController = TextEditingController();
   final detailController = TextEditingController();
 
@@ -24,6 +27,20 @@ class TaskContentPartState extends State<TaskContentPart> {
   DateTime limitDateTime = DateTime.now();
 
   final formKey = GlobalKey<FormState>();
+
+  Task? taskForEdit;
+
+  ///
+  @override
+  void initState() {
+    if (widget.isEditMode && widget.selectedTask != null) {
+      taskForEdit = widget.selectedTask;
+
+      setDetailData();
+    }
+
+    super.initState();
+  }
 
   ///
   @override
@@ -44,17 +61,6 @@ class TaskContentPartState extends State<TaskContentPart> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              // TextField(
-              //   controller: titleController,
-              //   autofocus: true,
-              //   style: TextStyles.newTaskTitleTextStyle,
-              //   decoration: InputDecoration(
-              //     icon: const Icon(Icons.title),
-              //     hintText: StringR.title,
-              //     border: const OutlineInputBorder(),
-              //   ),
-              // ),
-
               TextFormField(
                 controller: titleController,
                 autofocus: true,
@@ -67,7 +73,6 @@ class TaskContentPartState extends State<TaskContentPart> {
                 validator: (value) => (value == null || value.isEmpty) ? StringR.pleaseEnterTitle : null,
                 autovalidateMode: AutovalidateMode.always,
               ),
-
               CustomSpacer.height8,
               Row(
                 children: [
@@ -126,5 +131,13 @@ class TaskContentPartState extends State<TaskContentPart> {
         DateTime.now();
 
     setState(() {});
+  }
+
+  ///
+  void setDetailData() {
+    titleController.text = taskForEdit!.title;
+    detailController.text = taskForEdit!.detail;
+    isImportant = taskForEdit!.isImportant;
+    limitDateTime = taskForEdit!.limitDateTime;
   }
 }
