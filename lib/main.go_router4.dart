@@ -1,36 +1,143 @@
 // ignore_for_file: use_colored_box, always_declare_return_types
 
 import 'package:flutter/material.dart';
+
+//
+
+//import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:url_strategy/url_strategy.dart';
+//
+
+// ignore: directives_ordering
 import 'package:go_router/go_router.dart';
 
-void main() => runApp(const MyApp());
+import 'digression/custom_dialog_page.dart';
+
+void main() {
+//  usePathUrlStrategy();
+
+  setPathUrlStrategy();
+
+  runApp(const MyApp());
+}
 
 // ignore: avoid_classes_with_only_static_members
 class RouteNames {
   static String home = 'home';
-  static String normal = 'normal';
-  static String willpop = 'willpop';
+
+  static String normalMaster = 'normalMaster';
+  static String normalDetail = 'normalDetail';
+
+  static String dialogMaster = 'dialogMaster';
+  static String confirmDialog = 'confirmDialog';
+
+  static String willpopMaster = 'willpopMaster';
+  static String willpopDetail = 'willpopDetail';
 }
 
+final _rootNavigateKey = GlobalKey<NavigatorState>();
+final _shellNavigateKey = GlobalKey<NavigatorState>();
+
 final appRouter = GoRouter(
+  navigatorKey: _rootNavigateKey,
+  initialLocation: '/normal',
   routes: [
-    GoRoute(
-      path: '/',
-      name: RouteNames.home,
-      builder: (context, state) => const HomeScreen(),
+//    GoRoute(
+    ShellRoute(
+      // path: '/',
+      // name: RouteNames.home,
+      navigatorKey: _shellNavigateKey,
+//      builder: (context, state) => const HomeScreen(),
+      builder: (context, state, child) => HomeScreen(child: child),
       routes: [
+        /*
         //url: /normal
         GoRoute(
           path: 'normal',
-          name: RouteNames.normal,
-          builder: (context, state) => NormalScreen(),
+          name: RouteNames.normalDetail,
+          pageBuilder: (context, state) {
+            return CustomTransitionPage(
+              key: state.pageKey,
+              child: NormalDetailScreen(),
+              transitionDuration: const Duration(seconds: 2),
+              transitionsBuilder: (context, firstAnimation, secondAnimation, child) {
+                return RotationTransition(
+                  turns: CurveTween(curve: Curves.bounceOut).animate(firstAnimation),
+                  child: child,
+                );
+              },
+            );
+          },
         ),
 
         //url: /willpop
         GoRoute(
           path: 'willpop',
-          name: RouteNames.willpop,
-          builder: (context, state) => const WillPopScreen(param: 'dummy'),
+          name: RouteNames.willpopDetail,
+          builder: (context, state) => const WillPopDetailScreen(param: 'dummy'),
+        ),
+
+        GoRoute(
+          path: 'confirmDialog',
+          name: RouteNames.confirmDialog,
+          pageBuilder: (context, state) {
+            return CustomDialog(builder: (context) => const ConfirmDialog());
+          },
+        ),
+*/
+        ////////
+
+        GoRoute(
+          path: '/normal',
+          name: RouteNames.normalMaster,
+          builder: (context, state) => NormalMasterScreen(),
+          routes: [
+            GoRoute(
+              path: 'detail',
+              name: RouteNames.normalDetail,
+              pageBuilder: (context, state) {
+                return CustomTransitionPage(
+                  key: state.pageKey,
+                  child: NormalDetailScreen(),
+                  transitionDuration: const Duration(seconds: 2),
+                  transitionsBuilder: (context, firstAnimation, secondAnimation, child) {
+                    return RotationTransition(
+                      turns: CurveTween(curve: Curves.bounceOut).animate(firstAnimation),
+                      child: child,
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+
+        GoRoute(
+          path: '/showDialog',
+          name: RouteNames.dialogMaster,
+          builder: (context, state) => const ShowDialogMasterScreen(),
+          routes: [
+            GoRoute(
+              path: 'confirmDialog',
+              name: RouteNames.confirmDialog,
+              pageBuilder: (context, state) {
+                return CustomDialogPage(builder: (context) => const ConfirmDialog());
+              },
+            ),
+          ],
+        ),
+
+        GoRoute(
+          path: '/willPop',
+          name: RouteNames.willpopMaster,
+          builder: (context, state) => const WillPopMasterScreen(),
+          routes: [
+            GoRoute(
+              path: 'detail',
+              name: RouteNames.willpopDetail,
+              builder: (context, state) => const WillPopDetailScreen(param: 'dummy'),
+            ),
+          ],
         ),
       ],
     ),
@@ -47,7 +154,9 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.child});
+
+  final Widget child;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -56,23 +165,28 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
-  final _pages = [
-    NormalPage(),
-    const ShowDialogPage(),
-    const WillPopPage(),
-  ];
+  // final _pages = [
+  //   NormalMasterScreen(),
+  //   const ShowDialogMasterScreen(),
+  //   const WillPopMasterScreen(),
+  // ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex],
+      // body: _pages[_currentIndex],
+      body: widget.child,
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: (selectedIndex) {
-          setState(() {
-            _currentIndex = selectedIndex;
-          });
-        },
+        // onTap: (selectedIndex) {
+        //   setState(() {
+        //     _currentIndex = selectedIndex;
+        //   });
+        // },
+
+        onTap: (selectedIndex) => _onItemTapped(selectedIndex: selectedIndex),
+
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.ad_units), label: 'Normal'),
           BottomNavigationBarItem(icon: Icon(Icons.zoom_in), label: 'Dialog'),
@@ -81,13 +195,28 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  ///
+  _onItemTapped({required int selectedIndex}) {
+    switch (selectedIndex) {
+      case 0:
+        context.goNamed(RouteNames.normalMaster);
+        break;
+      case 1:
+        context.goNamed(RouteNames.dialogMaster);
+        break;
+      case 2:
+        context.goNamed(RouteNames.willpopMaster);
+        break;
+    }
+  }
 }
 
 //------- １．Normal -------
 
 // ignore: must_be_immutable
-class NormalPage extends StatelessWidget {
-  NormalPage({super.key});
+class NormalMasterScreen extends StatelessWidget {
+  NormalMasterScreen({super.key});
 
   late BuildContext _context;
 
@@ -107,13 +236,13 @@ class NormalPage extends StatelessWidget {
   }
 
   _openNormalScreen() {
-    _context.goNamed(RouteNames.normal);
+    _context.goNamed(RouteNames.normalDetail);
   }
 }
 
 // ignore: must_be_immutable
-class NormalScreen extends StatelessWidget {
-  NormalScreen({super.key});
+class NormalDetailScreen extends StatelessWidget {
+  NormalDetailScreen({super.key});
 
   late BuildContext _context;
 
@@ -145,8 +274,8 @@ class NormalScreen extends StatelessWidget {
 }
 
 //------- ２．Dialog -------
-class ShowDialogPage extends StatelessWidget {
-  const ShowDialogPage({super.key});
+class ShowDialogMasterScreen extends StatelessWidget {
+  const ShowDialogMasterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -165,27 +294,36 @@ class ShowDialogPage extends StatelessWidget {
   }
 
   _openDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('ダイアログ'),
-        actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent,
-            ),
-            onPressed: () => Navigator.pop(context),
-            child: const Text('とじる'),
+    context.goNamed(RouteNames.confirmDialog);
+  }
+}
+
+class ConfirmDialog extends StatelessWidget {
+  const ConfirmDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('ダイアログ'),
+      actions: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.redAccent,
           ),
-        ],
-      ),
+//          onPressed: () => Navigator.pop(context),
+
+          onPressed: () => context.goNamed(RouteNames.home),
+
+          child: const Text('とじる'),
+        ),
+      ],
     );
   }
 }
 
 //------- ３．WillPop -------
-class WillPopPage extends StatelessWidget {
-  const WillPopPage({super.key});
+class WillPopMasterScreen extends StatelessWidget {
+  const WillPopMasterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +346,7 @@ class WillPopPage extends StatelessWidget {
       context,
       //Screenを開く際に値渡し
       MaterialPageRoute(
-        builder: (_) => const WillPopScreen(
+        builder: (_) => const WillPopDetailScreen(
           param: '渡された値',
         ),
       ),
@@ -216,8 +354,8 @@ class WillPopPage extends StatelessWidget {
   }
 }
 
-class WillPopScreen extends StatelessWidget {
-  const WillPopScreen({super.key, required this.param});
+class WillPopDetailScreen extends StatelessWidget {
+  const WillPopDetailScreen({super.key, required this.param});
 
   final String param;
 
