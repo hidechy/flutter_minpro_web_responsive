@@ -72,6 +72,18 @@ class DetailPage extends StatelessWidget {
                   ),
                 )
               : null,
+          floatingActionButton: (selectedTask != null)
+              ? FloatingActionButton.extended(
+                  onPressed: () {
+                    _finishTask(selectedTask: selectedTask);
+                  },
+                  label: Text(
+                    (selectedTask.isFinished) ? StringR.inComplete : StringR.complete,
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  backgroundColor: Colors.transparent,
+                )
+              : null,
         );
       },
     );
@@ -140,6 +152,22 @@ class DetailPage extends StatelessWidget {
       context: _context,
       contentText: StringR.deleteTaskCompleted,
       flag: 'DetailPage_deleteTask',
+      onUndone: () => _context.read<Notifier>().undo(),
+    );
+
+    _context.read<Notifier>().setCurrentTask(null);
+  }
+
+  ///
+  void _finishTask({required Task selectedTask}) {
+    final isFinished = !selectedTask.isFinished;
+
+    _context.read<Notifier>().finishTask(selectedTask: selectedTask, isFinished: isFinished);
+
+    showSnackBar(
+      context: _context,
+      contentText: isFinished ? StringR.finishTaskCompleted : StringR.unFinishTaskCompleted,
+      flag: 'DetailPage_finishTask',
       onUndone: () => _context.read<Notifier>().undo(),
     );
 
