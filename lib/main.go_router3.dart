@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'digression/custom_dialog_page.dart';
+
 void main() => runApp(const MyApp());
 
 // ignore: avoid_classes_with_only_static_members
@@ -10,6 +12,7 @@ class RouteNames {
   static String home = 'home';
   static String normal = 'normal';
   static String willpop = 'willpop';
+  static String confirmDialog = 'confirmDialog';
 }
 
 final appRouter = GoRouter(
@@ -31,6 +34,18 @@ final appRouter = GoRouter(
           path: 'willpop',
           name: RouteNames.willpop,
           builder: (context, state) => const WillPopScreen(param: 'dummy'),
+        ),
+
+        GoRoute(
+          path: 'confirmDialog',
+          name: RouteNames.confirmDialog,
+          // builder: (context, state) {
+          //   return const ConfirmDialog();
+          // },
+
+          pageBuilder: (context, state) {
+            return CustomDialogPage(builder: (context) => const ConfirmDialog());
+          },
         ),
       ],
     ),
@@ -165,20 +180,47 @@ class ShowDialogPage extends StatelessWidget {
   }
 
   _openDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('ダイアログ'),
-        actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent,
-            ),
-            onPressed: () => Navigator.pop(context),
-            child: const Text('とじる'),
+    // showDialog(
+    //   context: context,
+    //   builder: (context) {
+    //     return AlertDialog(
+    //       title: const Text('ダイアログ'),
+    //       actions: [
+    //         ElevatedButton(
+    //           style: ElevatedButton.styleFrom(
+    //             backgroundColor: Colors.redAccent,
+    //           ),
+    //           onPressed: () => Navigator.pop(context),
+    //           child: const Text('とじる'),
+    //         ),
+    //       ],
+    //     );
+    //   },
+    // );
+
+    context.goNamed(RouteNames.confirmDialog);
+  }
+}
+
+class ConfirmDialog extends StatelessWidget {
+  const ConfirmDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('ダイアログ'),
+      actions: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.redAccent,
           ),
-        ],
-      ),
+//          onPressed: () => Navigator.pop(context),
+
+          onPressed: () => context.goNamed(RouteNames.home),
+
+          child: const Text('とじる'),
+        ),
+      ],
     );
   }
 }
