@@ -66,11 +66,11 @@ class TaskListCard extends StatelessWidget {
         subtitle: AutoSizeText(convertDateTimeToString(dateTime: task.limitDateTime)),
         trailing: PopupMenuButton(
           tooltip: StringR.showMenu,
-          icon: Icon(Icons.more_vert),
+          icon: const Icon(Icons.more_vert),
           itemBuilder: (context) {
             return [
-              PopupMenuItem<TaskListTileMenu>(child: Text(StringR.edit), value: TaskListTileMenu.EDIT),
-              PopupMenuItem<TaskListTileMenu>(child: Text(StringR.delete), value: TaskListTileMenu.DELETE),
+              PopupMenuItem<TaskListTileMenu>(value: TaskListTileMenu.EDIT, child: Text(StringR.edit)),
+              PopupMenuItem<TaskListTileMenu>(value: TaskListTileMenu.DELETE, child: Text(StringR.delete)),
             ];
           },
           onSelected: (value) {
