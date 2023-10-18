@@ -178,7 +178,11 @@ class _HomeScreenState extends State<HomeScreen> {
       body: widget.child,
 
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+//        currentIndex: _currentIndex,
+        currentIndex: _calcCurrentIndex(),
+
+//
+
         // onTap: (selectedIndex) {
         //   setState(() {
         //     _currentIndex = selectedIndex;
@@ -194,6 +198,23 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  ///
+  int _calcCurrentIndex() {
+    final location = GoRouterState.of(context).matchedLocation;
+
+    print(location);
+
+    if (location.startsWith('/normal')) {
+      return 0;
+    } else if (location.startsWith('/showDialog')) {
+      return 1;
+    } else if (location.startsWith('/willPop')) {
+      return 2;
+    }
+
+    return 0;
   }
 
   ///
@@ -269,7 +290,8 @@ class NormalDetailScreen extends StatelessWidget {
   _closeNormalScreen() {
 //    Navigator.pop(context);
 
-    _context.goNamed(RouteNames.home);
+//    _context.goNamed(RouteNames.home);
+    _context.goNamed(RouteNames.normalMaster);
   }
 }
 
@@ -312,7 +334,8 @@ class ConfirmDialog extends StatelessWidget {
           ),
 //          onPressed: () => Navigator.pop(context),
 
-          onPressed: () => context.goNamed(RouteNames.home),
+//          onPressed: () => context.goNamed(RouteNames.home),
+          onPressed: () => context.goNamed(RouteNames.dialogMaster),
 
           child: const Text('とじる'),
         ),
