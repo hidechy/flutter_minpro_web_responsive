@@ -1,13 +1,22 @@
 // ignore_for_file: use_colored_box, always_declare_return_types
 
 import 'package:flutter/material.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+
+//
+
+//import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:url_strategy/url_strategy.dart';
+//
+
+// ignore: directives_ordering
 import 'package:go_router/go_router.dart';
 
 import 'digression/custom_dialog_page.dart';
 
 void main() {
-  usePathUrlStrategy();
+//  usePathUrlStrategy();
+
+  setPathUrlStrategy();
 
   runApp(const MyApp());
 }

@@ -20,14 +20,15 @@ dependencies:
     sdk: flutter
 
   flutter_slidable: ^3.0.0
-  
-  flutter_web_plugins:
-    sdk: flutter
-      
+    
+    #  flutter_web_plugins:
+    #    sdk: flutter
+        
   go_router: ^11.1.4
   intl: ^0.18.1
   provider: ^6.0.5
   tuple: ^2.0.2
+  url_strategy: ^0.2.0
 
 dev_dependencies:
 
