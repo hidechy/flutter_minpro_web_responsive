@@ -38,8 +38,26 @@ final appRouter = GoRouter(
               child: NormalScreen(),
               transitionDuration: const Duration(seconds: 2),
               transitionsBuilder: (context, firstAnimation, secondAnimation, child) {
-                return FadeTransition(
-                  opacity: CurveTween(curve: Curves.easeInOut).animate(firstAnimation),
+                // return FadeTransition(
+                //   opacity: CurveTween(curve: Curves.easeInOut).animate(firstAnimation),
+                //   child: child,
+                // );
+
+                // return SlideTransition(
+                //   position: firstAnimation.drive(
+                //     Tween<Offset>(begin: const Offset(0.25, 0.25), end: Offset.zero)
+                //         .chain(CurveTween(curve: Curves.elasticIn)),
+                //   ),
+                //   child: child,
+                // );
+
+                // return ScaleTransition(
+                //   scale: CurveTween(curve: Curves.bounceIn).animate(firstAnimation),
+                //   child: child,
+                // );
+
+                return RotationTransition(
+                  turns: CurveTween(curve: Curves.bounceOut).animate(firstAnimation),
                   child: child,
                 );
               },
