@@ -23,7 +23,7 @@ final appRouter = GoRouter(
         GoRoute(
           path: 'normal',
           name: RouteNames.normal,
-          builder: (context, state) => const NormalScreen(),
+          builder: (context, state) => NormalScreen(),
         ),
 
         //url: /willpop
@@ -111,11 +111,17 @@ class NormalPage extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class NormalScreen extends StatelessWidget {
-  const NormalScreen({super.key});
+  NormalScreen({super.key});
 
+  late BuildContext _context;
+
+  ///
   @override
   Widget build(BuildContext context) {
+    _context = context;
+
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       appBar: AppBar(
@@ -124,15 +130,17 @@ class NormalScreen extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: () => _closeNormalScreen(context),
+          onPressed: _closeNormalScreen,
           child: const Text('もどる'),
         ),
       ),
     );
   }
 
-  _closeNormalScreen(BuildContext context) {
-    Navigator.pop(context);
+  _closeNormalScreen() {
+//    Navigator.pop(context);
+
+    _context.goNamed(RouteNames.home);
   }
 }
 
