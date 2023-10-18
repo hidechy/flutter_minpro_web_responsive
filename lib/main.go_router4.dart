@@ -163,7 +163,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
+//  int _currentIndex = 0;
 
   // final _pages = [
   //   NormalMasterScreen(),
@@ -203,8 +203,6 @@ class _HomeScreenState extends State<HomeScreen> {
   ///
   int _calcCurrentIndex() {
     final location = GoRouterState.of(context).matchedLocation;
-
-    print(location);
 
     if (location.startsWith('/normal')) {
       return 0;
