@@ -1,17 +1,48 @@
 // ignore_for_file: use_colored_box, always_declare_return_types
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 void main() => runApp(const MyApp());
+
+// ignore: avoid_classes_with_only_static_members
+class RouteNames {
+  static String home = 'home';
+  static String normal = 'normal';
+  static String willpop = 'willpop';
+}
+
+final appRouter = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      name: RouteNames.home,
+      builder: (context, state) => const HomeScreen(),
+      routes: [
+        //url: /normal
+        GoRoute(
+          path: 'normal',
+          name: RouteNames.normal,
+          builder: (context, state) => const NormalScreen(),
+        ),
+
+        //url: /willpop
+        GoRoute(
+          path: 'willpop',
+          name: RouteNames.willpop,
+          builder: (context, state) => const WillPopScreen(param: 'dummy'),
+        ),
+      ],
+    ),
+  ],
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeScreen(),
-    );
+    return MaterialApp.router(routerConfig: appRouter);
   }
 }
 
@@ -26,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
   final _pages = [
-    const NormalPage(),
+    NormalPage(),
     const ShowDialogPage(),
     const WillPopPage(),
   ];
@@ -54,29 +85,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
 //------- １．Normal -------
 
+// ignore: must_be_immutable
 class NormalPage extends StatelessWidget {
-  const NormalPage({super.key});
+  NormalPage({super.key});
+
+  late BuildContext _context;
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
+
     return Container(
       color: Colors.blueAccent,
       child: Center(
         child: ElevatedButton(
-          onPressed: () => _openNormalScreen(context),
+          onPressed: _openNormalScreen,
           child: const Text('NormalScreenを開く'),
         ),
       ),
     );
   }
 
-  _openNormalScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const NormalScreen(),
-      ),
-    );
+  _openNormalScreen() {
+    _context.goNamed(RouteNames.normal);
   }
 }
 
