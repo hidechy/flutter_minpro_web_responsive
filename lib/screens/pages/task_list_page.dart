@@ -1,10 +1,12 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/task.dart';
 import '../../state/notifier.dart';
+import '../../util/const.dart';
 import '../../util/constants.dart';
 import '../../util/functions.dart';
 import '../../util/styles.dart';
@@ -55,12 +57,41 @@ class TaskListPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: selectedTaskList.length,
               shrinkWrap: true,
-              itemBuilder: (context, index) => TaskListCard(
-                task: selectedTaskList[index],
-                onFinishChanged: (value) => _finishTask(isFinished: value, selectedTask: selectedTaskList[index]),
-                onDelete: () => _deleteTask(selectedTask: selectedTaskList[index]),
-                onEdit: () => _showDetailTask(selectedTask: selectedTaskList[index]),
-              ),
+              itemBuilder: (context, index) => (DeviceInfo.isWebOrDesktop)
+                  ? _callTaskListCard(task: selectedTaskList[index])
+                  : Slidable(
+                      key: ValueKey<int>(selectedTaskList[index].id),
+                      endActionPane: ActionPane(
+                        motion: const ScrollMotion(),
+                        extentRatio: 0.6,
+                        dismissible: DismissiblePane(
+                          onDismissed: () {
+                            _deleteTask(selectedTask: selectedTaskList[index]);
+                          },
+                        ),
+                        children: [
+                          SlidableAction(
+                            onPressed: (context) => _showDetailTask(selectedTask: selectedTaskList[index]),
+                            label: StringR.edit,
+                            icon: Icons.edit,
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.greenAccent.withOpacity(0.3),
+                          ),
+                          SlidableAction(
+                            onPressed: (context) => _deleteTask(selectedTask: selectedTaskList[index]),
+                            label: StringR.delete,
+                            icon: Icons.delete,
+                            backgroundColor: Colors.redAccent.withOpacity(0.3),
+                          ),
+                          SlidableAction(
+                            onPressed: null,
+                            label: StringR.close,
+                            icon: Icons.close,
+                          ),
+                        ],
+                      ),
+                      child: _callTaskListCard(task: selectedTaskList[index]),
+                    ),
             ),
           ),
           floatingActionButton: (screenSize == ScreenSize.LARGE)
@@ -76,6 +107,16 @@ class TaskListPage extends StatelessWidget {
               : null,
         );
       },
+    );
+  }
+
+  ///
+  Widget _callTaskListCard({required Task task}) {
+    return TaskListCard(
+      task: task,
+      onFinishChanged: (value) => _finishTask(isFinished: value, selectedTask: task),
+      onDelete: () => _deleteTask(selectedTask: task),
+      onEdit: () => _showDetailTask(selectedTask: task),
     );
   }
 

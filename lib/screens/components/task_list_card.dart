@@ -37,9 +37,6 @@ class _TaskListCardState extends State<TaskListCard> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      // onHover: (event) => setState(() => isPopupMenuDisplay = true),
-      // onExit: (event) => setState(() => isPopupMenuDisplay = false),
-
       onHover: (event) {
         if (DeviceInfo.isWebOrDesktop) {
           setState(() => isPopupMenuDisplay = true);
@@ -50,7 +47,6 @@ class _TaskListCardState extends State<TaskListCard> {
           setState(() => isPopupMenuDisplay = false);
         }
       },
-
       child: Card(
         color:
             (DateTime.now().compareTo(widget.task.limitDateTime) > 0) ? Colors.redAccent : CustomColors.detailBGColor,
