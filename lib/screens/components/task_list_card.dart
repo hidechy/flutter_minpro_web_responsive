@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/task.dart';
+import '../../util/const.dart';
 import '../../util/constants.dart';
 import '../../util/functions.dart';
 import '../../util/styles.dart';
@@ -63,6 +64,27 @@ class TaskListCard extends StatelessWidget {
           ],
         ),
         subtitle: AutoSizeText(convertDateTimeToString(dateTime: task.limitDateTime)),
+        trailing: PopupMenuButton(
+          tooltip: StringR.showMenu,
+          icon: Icon(Icons.more_vert),
+          itemBuilder: (context) {
+            return [
+              PopupMenuItem<TaskListTileMenu>(child: Text(StringR.edit), value: TaskListTileMenu.EDIT),
+              PopupMenuItem<TaskListTileMenu>(child: Text(StringR.delete), value: TaskListTileMenu.DELETE),
+            ];
+          },
+          onSelected: (value) {
+            switch (value) {
+              case TaskListTileMenu.EDIT:
+                onEdit();
+                break;
+
+              case TaskListTileMenu.DELETE:
+                onDelete();
+                break;
+            }
+          },
+        ),
       ),
     );
   }

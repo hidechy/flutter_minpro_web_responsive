@@ -1,0 +1,1 @@
+enum TaskListTileMenu { EDIT, DELETE }
