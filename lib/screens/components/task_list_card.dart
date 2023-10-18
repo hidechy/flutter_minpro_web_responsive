@@ -9,7 +9,7 @@ import '../../util/constants.dart';
 import '../../util/functions.dart';
 import '../../util/styles.dart';
 
-class TaskListCard extends StatelessWidget {
+class TaskListCard extends StatefulWidget {
   const TaskListCard({
     super.key,
     required this.task,
@@ -26,64 +26,76 @@ class TaskListCard extends StatelessWidget {
 
   final VoidCallback onEdit;
 
+  @override
+  State<TaskListCard> createState() => _TaskListCardState();
+}
+
+class _TaskListCardState extends State<TaskListCard> {
+  bool isPopupMenuDisplay = false;
+
   ///
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: (DateTime.now().compareTo(task.limitDateTime) > 0) ? Colors.redAccent : CustomColors.detailBGColor,
-      child: ListTile(
-        leading: Radio(
-          value: true,
-          groupValue: task.isFinished,
-          onChanged: onFinishChanged,
-        ),
-        onLongPress: onDelete,
-        onTap: onEdit,
-        title: Row(
-          children: [
-            if (task.isImportant) ...[
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
-                decoration: BoxDecoration(
-                  color: Colors.yellowAccent,
-                  borderRadius: BorderRadius.circular(15),
+    return MouseRegion(
+      onHover: (event) => setState(() => isPopupMenuDisplay = true),
+      onExit: (event) => setState(() => isPopupMenuDisplay = false),
+      child: Card(
+        color:
+            (DateTime.now().compareTo(widget.task.limitDateTime) > 0) ? Colors.redAccent : CustomColors.detailBGColor,
+        child: ListTile(
+          leading: Radio(
+            value: true,
+            groupValue: widget.task.isFinished,
+            onChanged: widget.onFinishChanged,
+          ),
+          onLongPress: widget.onDelete,
+          onTap: widget.onEdit,
+          title: Row(
+            children: [
+              if (widget.task.isImportant) ...[
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.yellowAccent,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Text(
+                    StringR.important,
+                    style: const TextStyle(color: Colors.black, fontSize: 12),
+                  ),
                 ),
+                CustomSpacer.width10,
+              ],
+              Expanded(
                 child: Text(
-                  StringR.important,
-                  style: const TextStyle(color: Colors.black, fontSize: 12),
+                  widget.task.title,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              CustomSpacer.width10,
             ],
-            Expanded(
-              child: Text(
-                task.title,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
-        subtitle: AutoSizeText(convertDateTimeToString(dateTime: task.limitDateTime)),
-        trailing: PopupMenuButton(
-          tooltip: StringR.showMenu,
-          icon: const Icon(Icons.more_vert),
-          itemBuilder: (context) {
-            return [
-              PopupMenuItem<TaskListTileMenu>(value: TaskListTileMenu.EDIT, child: Text(StringR.edit)),
-              PopupMenuItem<TaskListTileMenu>(value: TaskListTileMenu.DELETE, child: Text(StringR.delete)),
-            ];
-          },
-          onSelected: (value) {
-            switch (value) {
-              case TaskListTileMenu.EDIT:
-                onEdit();
-                break;
+          ),
+          subtitle: AutoSizeText(convertDateTimeToString(dateTime: widget.task.limitDateTime)),
+          trailing: PopupMenuButton(
+            tooltip: StringR.showMenu,
+            icon: (isPopupMenuDisplay) ? Icon(Icons.more_vert) : Container(),
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem<TaskListTileMenu>(value: TaskListTileMenu.EDIT, child: Text(StringR.edit)),
+                PopupMenuItem<TaskListTileMenu>(value: TaskListTileMenu.DELETE, child: Text(StringR.delete)),
+              ];
+            },
+            onSelected: (value) {
+              switch (value) {
+                case TaskListTileMenu.EDIT:
+                  widget.onEdit();
+                  break;
 
-              case TaskListTileMenu.DELETE:
-                onDelete();
-                break;
-            }
-          },
+                case TaskListTileMenu.DELETE:
+                  widget.onDelete();
+                  break;
+              }
+            },
+          ),
         ),
       ),
     );
