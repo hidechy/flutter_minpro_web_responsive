@@ -26,7 +26,25 @@ final appRouter = GoRouter(
         GoRoute(
           path: 'normal',
           name: RouteNames.normal,
-          builder: (context, state) => NormalScreen(),
+          // builder: (context, state) => NormalScreen(),
+          //
+
+          pageBuilder: (context, state) {
+//            return NoTransitionPage(child: NormalScreen());
+            //
+
+            return CustomTransitionPage(
+              key: state.pageKey,
+              child: NormalScreen(),
+              transitionDuration: const Duration(seconds: 2),
+              transitionsBuilder: (context, firstAnimation, secondAnimation, child) {
+                return FadeTransition(
+                  opacity: CurveTween(curve: Curves.easeInOut).animate(firstAnimation),
+                  child: child,
+                );
+              },
+            );
+          },
         ),
 
         //url: /willpop
