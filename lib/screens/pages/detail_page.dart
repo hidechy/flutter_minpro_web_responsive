@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_minpro_web_responsive/util/functions.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../data/task.dart';
@@ -111,6 +112,23 @@ class DetailPage extends StatelessWidget {
       );
 
       _context.read<Notifier>().updateTask(task: taskForUpdate);
+
+      showSnackBar(context: _context, contentText: StringR.editTaskCompleted, flag: 'DetailPage');
+    }
+
+    _detailPageClose();
+  }
+
+  ///
+  void _detailPageClose() {
+    switch (_context.read<Notifier>().screenSize) {
+      case ScreenSize.SMALL:
+        Navigator.pop(_context);
+        break;
+
+      // ignore: no_default_cases
+      default:
+        break;
     }
   }
 }
