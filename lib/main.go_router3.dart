@@ -1,11 +1,16 @@
 // ignore_for_file: use_colored_box, always_declare_return_types
 
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:go_router/go_router.dart';
 
 import 'digression/custom_dialog_page.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  usePathUrlStrategy();
+
+  runApp(const MyApp());
+}
 
 // ignore: avoid_classes_with_only_static_members
 class RouteNames {
