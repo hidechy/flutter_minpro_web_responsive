@@ -5,7 +5,8 @@ import 'package:provider/provider.dart';
 import '../../route/router.dart';
 import '../../state/notifier.dart';
 import '../../util/styles.dart';
-import '../pages/add_task_page.dart';
+
+//import '../pages/add_task_page.dart';
 
 //import '../add_task_screen.dart';
 
@@ -21,16 +22,18 @@ void showAddNewTaskDialog(BuildContext context) {
 
     case ScreenSize.MID:
     case ScreenSize.LARGE:
-      showDialog(
-        context: context,
-        builder: (context) => Dialog(
-          child: SizedBox(
-            width: DialogSize.addTaskDialogWidth,
-            height: DialogSize.addTaskDialogHeight,
-            child: AddTaskPage(),
-          ),
-        ),
-      );
+      // showDialog(
+      //   context: context,
+      //   builder: (context) => Dialog(
+      //     child: SizedBox(
+      //       width: DialogSize.addTaskDialogWidth,
+      //       height: DialogSize.addTaskDialogHeight,
+      //       child: AddTaskPage(),
+      //     ),
+      //   ),
+      // );
+
+      context.goNamed(RouteNames.addTaskDialog);
       break;
   }
 }
