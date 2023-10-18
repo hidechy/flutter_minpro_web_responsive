@@ -24,7 +24,7 @@ void showSnackBar({
   if (notifier.screenSize == ScreenSize.SMALL) {
     final snackBar = SnackBar(
       content: Text(contentText),
-      action: (flag == 'TaskListPage' || onUndone != null)
+      action: (flag == 'TaskListPage' || onUndone != null || flag == 'DetailPage_deleteTask')
           ? SnackBarAction(label: StringR.undo, onPressed: onUndone!)
           : null,
     );
@@ -52,7 +52,7 @@ void showSnackBar({
                     },
                     child: AutoSizeText(StringR.close),
                   ),
-                  if (flag == 'TaskListPage' || onUndone != null)
+                  if (flag == 'TaskListPage' || onUndone != null || flag == 'DetailPage_deleteTask')
                     TextButton(
                       onPressed: () {
                         onUndone!();

@@ -104,6 +104,8 @@ class TaskListPage extends StatelessWidget {
         _context.read<Notifier>().undo();
       },
     );
+
+    _context.read<Notifier>().setCurrentTask(null);
   }
 
   ///
@@ -118,6 +120,8 @@ class TaskListPage extends StatelessWidget {
         _context.read<Notifier>().undo();
       },
     );
+
+    _context.read<Notifier>().setCurrentTask(null);
   }
 
   ///

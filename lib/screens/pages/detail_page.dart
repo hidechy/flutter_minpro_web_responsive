@@ -57,7 +57,7 @@ class DetailPage extends StatelessWidget {
                       icon: const Icon(Icons.done),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () => _deleteTask(selectedTask: selectedTask),
                       icon: const Icon(Icons.delete),
                     ),
                   ]
@@ -130,5 +130,19 @@ class DetailPage extends StatelessWidget {
       default:
         break;
     }
+  }
+
+  ///
+  void _deleteTask({required Task selectedTask}) {
+    _context.read<Notifier>().deleteTask(selectedTask: selectedTask);
+
+    showSnackBar(
+      context: _context,
+      contentText: StringR.deleteTaskCompleted,
+      flag: 'DetailPage_deleteTask',
+      onUndone: () => _context.read<Notifier>().undo(),
+    );
+
+    _context.read<Notifier>().setCurrentTask(null);
   }
 }

@@ -20,6 +20,8 @@ class Notifier extends ChangeNotifier {
 
   Task? currentTask;
 
+  Task? taskBeforeChange;
+
   ///
   void addNewTask({
     required String title,
@@ -49,6 +51,8 @@ class Notifier extends ChangeNotifier {
   ///
   // ignore: inference_failure_on_untyped_parameter, type_annotate_public_apis
   void finishTask({required Task selectedTask, required isFinished}) {
+    taskBeforeChange = selectedTask;
+
     repository.finishTask(selectedTask: selectedTask, isFinished: isFinished);
 
     getTaskList();
@@ -56,6 +60,8 @@ class Notifier extends ChangeNotifier {
 
   ///
   void undo() {
+    currentTask = taskBeforeChange;
+
     repository.undo();
 
     getTaskList();
@@ -70,6 +76,8 @@ class Notifier extends ChangeNotifier {
 
   ///
   void deleteTask({required Task selectedTask}) {
+    taskBeforeChange = selectedTask;
+
     repository.deleteTask(selectedTask: selectedTask);
 
     getTaskList();
