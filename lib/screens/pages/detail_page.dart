@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:test_minpro_web_responsive/util/functions.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../data/task.dart';
 import '../../state/notifier.dart';
 import '../../util/constants.dart';
+import '../../util/functions.dart';
 import '../../util/styles.dart';
 import '../components/task_content_part.dart';
 
@@ -33,57 +33,72 @@ class DetailPage extends StatelessWidget {
           _updateDetailInfo(selectedTask: selectedTask);
         }
 
-        return Scaffold(
-          backgroundColor: CustomColors.detailBGColor,
-          appBar: AppBar(
-            title: Text(StringR.taskDetail),
-            centerTitle: true,
-            leading: (selectedTask != null)
-                ? IconButton(
-                    onPressed: () {
-                      _clearCurrentTask(selectedTask: selectedTask);
+        return FocusTraversalGroup(
+          policy: OrderedTraversalPolicy(),
+          child: Scaffold(
+            backgroundColor: CustomColors.detailBGColor,
+            appBar: AppBar(
+              title: Text(StringR.taskDetail),
+              centerTitle: true,
+              leading: (selectedTask != null)
+                  ? IconButton(
+                      onPressed: () {
+                        _clearCurrentTask(selectedTask: selectedTask);
 
-                      if (screenSize == ScreenSize.SMALL) {
-                        Navigator.pop(context);
-                      }
-                    },
-                    icon: const Icon(Icons.close),
+                        if (screenSize == ScreenSize.SMALL) {
+                          Navigator.pop(context);
+                        }
+                      },
+                      icon: const Icon(Icons.close),
+                    )
+                  : null,
+              actions: (selectedTask != null)
+                  ? [
+                      FocusTraversalOrder(
+                        order: const NumericFocusOrder(3),
+                        child: IconButton(
+                          onPressed: () => _updateTask(selectedTask: selectedTask),
+                          icon: const Icon(Icons.done),
+                        ),
+                      ),
+                      FocusTraversalOrder(
+                        order: const NumericFocusOrder(4),
+                        child: IconButton(
+                          onPressed: () => _deleteTask(selectedTask: selectedTask),
+                          icon: const Icon(Icons.delete),
+                        ),
+                      ),
+                    ]
+                  : null,
+            ),
+            body: (selectedTask != null)
+                ? SafeArea(
+                    child: FocusTraversalOrder(
+                      order: const NumericFocusOrder(1),
+                      child: TaskContentPart(
+                        key: taskContentPartKey,
+                        selectedTask: selectedTask,
+                        isEditMode: true,
+                      ),
+                    ),
                   )
                 : null,
-            actions: (selectedTask != null)
-                ? [
-                    IconButton(
-                      onPressed: () => _updateTask(selectedTask: selectedTask),
-                      icon: const Icon(Icons.done),
+            floatingActionButton: (selectedTask != null)
+                ? FocusTraversalOrder(
+                    order: const NumericFocusOrder(2),
+                    child: FloatingActionButton.extended(
+                      onPressed: () {
+                        _finishTask(selectedTask: selectedTask);
+                      },
+                      label: Text(
+                        (selectedTask.isFinished) ? StringR.inComplete : StringR.complete,
+                        style: const TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                      backgroundColor: Colors.transparent,
                     ),
-                    IconButton(
-                      onPressed: () => _deleteTask(selectedTask: selectedTask),
-                      icon: const Icon(Icons.delete),
-                    ),
-                  ]
+                  )
                 : null,
           ),
-          body: (selectedTask != null)
-              ? SafeArea(
-                  child: TaskContentPart(
-                    key: taskContentPartKey,
-                    selectedTask: selectedTask,
-                    isEditMode: true,
-                  ),
-                )
-              : null,
-          floatingActionButton: (selectedTask != null)
-              ? FloatingActionButton.extended(
-                  onPressed: () {
-                    _finishTask(selectedTask: selectedTask);
-                  },
-                  label: Text(
-                    (selectedTask.isFinished) ? StringR.inComplete : StringR.complete,
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  backgroundColor: Colors.transparent,
-                )
-              : null,
         );
       },
     );
