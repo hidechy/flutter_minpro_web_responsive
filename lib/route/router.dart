@@ -8,6 +8,7 @@ import '../screens/add_task_screen.dart';
 import '../screens/detail_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/pages/add_task_page.dart';
+import '../util/constants.dart';
 import '../util/styles.dart';
 
 class RouteNames {
@@ -17,6 +18,9 @@ class RouteNames {
 
   //
   static String addTaskDialog = 'addTaskDialog';
+
+  //
+  static String aboutUs = 'aboutUs';
 }
 
 final appRouter = GoRouter(
@@ -52,6 +56,28 @@ final appRouter = GoRouter(
                     height: DialogSize.addTaskDialogHeight,
                     child: AddTaskPage(),
                   ),
+                );
+              },
+            );
+          },
+        ),
+
+        //
+
+        GoRoute(
+          path: 'aboutUs',
+          name: RouteNames.aboutUs,
+          pageBuilder: (context, state) {
+            return CustomDialogPage(
+              builder: (context2) {
+                return AboutDialog(
+                  applicationIcon: const FlutterLogo(),
+                  applicationName: StringR.appTitle,
+                  applicationLegalese: '\u{a9} 2023 hidechy',
+                  children: const [
+                    Text('いろんな情報'),
+                    Text('いろんな情報'),
+                  ],
                 );
               },
             );

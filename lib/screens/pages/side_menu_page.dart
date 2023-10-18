@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../route/router.dart';
 import '../../state/notifier.dart';
 import '../../util/constants.dart';
 import '../../util/styles.dart';
@@ -66,16 +68,18 @@ class SideMenuPage extends StatelessWidget {
             ListTile(
               title: Text(StringR.showLicense),
               onTap: () {
-                showAboutDialog(
-                  context: context,
-                  applicationIcon: const FlutterLogo(),
-                  applicationName: StringR.appTitle,
-                  applicationLegalese: '\u{a9} 2023 hidechy',
-                  children: const [
-                    Text('いろんな情報'),
-                    Text('いろんな情報'),
-                  ],
-                );
+                // showAboutDialog(
+                //   context: context,
+                //   applicationIcon: const FlutterLogo(),
+                //   applicationName: StringR.appTitle,
+                //   applicationLegalese: '\u{a9} 2023 hidechy',
+                //   children: const [
+                //     Text('いろんな情報'),
+                //     Text('いろんな情報'),
+                //   ],
+                // );
+
+                context.goNamed(RouteNames.aboutUs);
               },
             ),
             ListTile(
