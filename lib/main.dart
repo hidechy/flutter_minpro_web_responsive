@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/home_screen.dart';
+import 'route/router.dart';
 import 'state/providers.dart';
+
+//import 'screens/home_screen.dart';
 
 void main() {
   runApp(
@@ -19,7 +21,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       localizationsDelegates: const [
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [Locale('ja')],
-      home: const HomeScreen(),
+//      home: const HomeScreen(),
     );
   }
 }

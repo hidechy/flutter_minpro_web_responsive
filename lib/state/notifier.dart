@@ -31,7 +31,10 @@ class Notifier extends ChangeNotifier {
   }) {
     repository.addNewTask(title: title, limitDateTime: limitDateTime, isImportant: isImportant, detail: detail);
 
-    notifyListeners();
+    //修正もれな気がする
+    getTaskList();
+
+//    notifyListeners();
   }
 
   ///

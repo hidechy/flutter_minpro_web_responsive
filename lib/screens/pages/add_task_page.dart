@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../route/router.dart';
 import '../../state/notifier.dart';
 import '../../util/constants.dart';
 import '../../util/functions.dart';
@@ -27,7 +29,9 @@ class AddTaskPage extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.close),
-          onPressed: () => Navigator.pop(context),
+          // onPressed: () => Navigator.pop(context),
+
+          onPressed: () => context.goNamed(RouteNames.home),
         ),
         actions: [
           IconButton(
@@ -62,7 +66,9 @@ class AddTaskPage extends StatelessWidget {
       );
 
       if (_context.read<Notifier>().screenSize == ScreenSize.SMALL) {
-        Navigator.pop(_context);
+        // Navigator.pop(_context);
+
+        _context.goNamed(RouteNames.home);
       }
     }
   }

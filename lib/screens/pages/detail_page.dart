@@ -1,10 +1,12 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../data/task.dart';
+import '../../route/router.dart';
 import '../../state/notifier.dart';
 import '../../util/constants.dart';
 import '../../util/functions.dart';
@@ -46,7 +48,9 @@ class DetailPage extends StatelessWidget {
                         _clearCurrentTask(selectedTask: selectedTask);
 
                         if (screenSize == ScreenSize.SMALL) {
-                          Navigator.pop(context);
+                          // Navigator.pop(context);
+
+                          context.goNamed(RouteNames.home);
                         }
                       },
                       icon: const Icon(Icons.close),
@@ -150,7 +154,9 @@ class DetailPage extends StatelessWidget {
   void _detailPageClose() {
     switch (_context.read<Notifier>().screenSize) {
       case ScreenSize.SMALL:
-        Navigator.pop(_context);
+        // Navigator.pop(_context);
+
+        _context.goNamed(RouteNames.home);
         break;
 
       // ignore: no_default_cases

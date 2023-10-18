@@ -39,7 +39,7 @@ final appRouter = GoRouter(
             // }
 
 //            return WillPopScreen(param: state.pathParameters["value"] ?? 'bbbbb');
-            return WillPopScreen(param: state.uri.queryParameters["value"] ?? 'bbbbb');
+            return WillPopScreen(param: state.uri.queryParameters['value'] ?? 'bbbbb');
           },
         ),
       ],
@@ -227,7 +227,7 @@ class WillPopPage extends StatelessWidget {
     // context.goNamed(RouteNames.willpop, extra: <String, String>{'value': '値あり'});
 
 //    context.goNamed(RouteNames.willpop, pathParameters: <String, String>{"value": "aaaaa"});
-    context.goNamed(RouteNames.willpop, queryParameters: <String, String>{"value": "aaaaa"});
+    context.goNamed(RouteNames.willpop, queryParameters: <String, String>{'value': 'aaaaa'});
   }
 }
 

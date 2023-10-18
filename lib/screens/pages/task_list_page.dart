@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/task.dart';
+import '../../route/router.dart';
 import '../../state/notifier.dart';
 import '../../util/const.dart';
 import '../../util/constants.dart';
@@ -12,8 +14,9 @@ import '../../util/functions.dart';
 import '../../util/styles.dart';
 import '../components/show_add_new_task_dialog.dart';
 import '../components/task_list_card.dart';
-import '../detail_screen.dart';
 import 'side_menu_page.dart';
+
+//import '../detail_screen.dart';
 
 class TaskListPage extends StatelessWidget {
   TaskListPage({super.key});
@@ -170,7 +173,9 @@ class TaskListPage extends StatelessWidget {
     _context.read<Notifier>().setCurrentTask(selectedTask);
 
     if (_context.read<Notifier>().screenSize == ScreenSize.SMALL) {
-      Navigator.push(_context, MaterialPageRoute(builder: (context) => const DetailScreen()));
+      // Navigator.push(_context, MaterialPageRoute(builder: (context) => const DetailScreen()));
+
+      _context.goNamed(RouteNames.detail);
     }
   }
 }
