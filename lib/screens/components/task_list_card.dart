@@ -77,7 +77,7 @@ class _TaskListCardState extends State<TaskListCard> {
           subtitle: AutoSizeText(convertDateTimeToString(dateTime: widget.task.limitDateTime)),
           trailing: PopupMenuButton(
             tooltip: StringR.showMenu,
-            icon: (isPopupMenuDisplay) ? Icon(Icons.more_vert) : Container(),
+            icon: isPopupMenuDisplay ? const Icon(Icons.more_vert) : Container(),
             itemBuilder: (context) {
               return [
                 PopupMenuItem<TaskListTileMenu>(value: TaskListTileMenu.EDIT, child: Text(StringR.edit)),
